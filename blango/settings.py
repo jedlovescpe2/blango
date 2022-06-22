@@ -9,11 +9,18 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
+
+
+
 import os
 from pathlib import Path
 from configurations import Configuration
 from configurations import values
 import dj_database_url
+import hashlib
+
+
+
 
 class Dev(Configuration):
 
@@ -97,6 +104,13 @@ class Dev(Configuration):
     #       }
     #   }
 
+    PASSWORD_HASHERS = [
+      'django.contrib.auth.hashers.Argon2PasswordHasher',
+      'django.contrib.auth.hashers.PBKDF2PasswordHasher',
+      'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
+      'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
+    ]
+
     DATABASES = {
         "default": dj_database_url.config(default=f"sqlite:///{BASE_DIR}/db.sqlite3"),
         "alternative": dj_database_url.config(
@@ -104,6 +118,8 @@ class Dev(Configuration):
             default=f"sqlite:///{BASE_DIR}/alternative_db.sqlite3",
         ),
     }
+
+    
 
 
     # Password validation
@@ -154,34 +170,36 @@ class Dev(Configuration):
     CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
     CRISPY_TEMPLATE_PACK = "bootstrap5"
 
-    LOGGING = {
-    "version":1,
-    "disable_existing_loggers": False,
-    #   "handlers": {
-    #       "console": {"class":"logging.StreamHandler","stream":"ext://sys.stdout"},
-    #   },
-    #   "handlers": {
-    #       "file": {"class": "logging.FileHandler", "filename": "/var/log/blango.log"},
-    #   },
+    # LOGGING = {
+    #   "version":1,
+    #   "disable_existing_loggers": False,
+    #   #   "handlers": {
+    #   #       "console": {"class":"logging.StreamHandler","stream":"ext://sys.stdout"},
+    #   #   },
+    #   #   "handlers": {
+    #   #       "file": {"class": "logging.FileHandler", "filename": "/var/log/blango.log"},
+    #   #   },
 
-    "formatters": {
-        "verbose": {
-            "format": "{levelname} {asctime} {module} {process:d} {thread:d} {message}",
-            "style": "{",
-        },
-    },
-    "handlers": {
-        "console": {
-            "class": "logging.StreamHandler",
-            "stream": "ext://sys.stdout",
-            "formatter": "verbose",
-        },
-    },
-    "root":{
-        "handlers":["console"],
-        "level":"DEBUG",
-    }
-    }
+    #   "formatters": {
+    #       "verbose": {
+    #           "format": "{levelname} {asctime} {module} {process:d} {thread:d} {message}",
+    #           "style": "{",
+    #       },
+    #   },
+    #   "handlers": {
+    #       "console": {
+    #           "class": "logging.StreamHandler",
+    #           "stream": "ext://sys.stdout",
+    #           "formatter": "verbose",
+    #       },
+    #   },
+    #   "root":{
+    #       "handlers":["console"],
+    #       "level":"DEBUG",
+    #   }
+    # }
+
+    
 
     #If production
     DJANGO_ADMINS="Jed Llenado,jedlovescpe2@gmail.com; Jed Gmail,jedlovescpe3@gmail.com"
@@ -223,3 +241,5 @@ class Dev(Configuration):
             "level": "DEBUG",
         },
     }
+
+   
