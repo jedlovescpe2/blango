@@ -17,137 +17,209 @@ import dj_database_url
 
 class Dev(Configuration):
 
-  # Build paths inside the project like this: BASE_DIR / 'subdir'.
-  BASE_DIR = Path(__file__).resolve().parent.parent
+    # Build paths inside the project like this: BASE_DIR / 'subdir'.
+    BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-  # Quick-start development settings - unsuitable for production
-  # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
+    # Quick-start development settings - unsuitable for production
+    # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
-  # SECURITY WARNING: keep the secret key used in production secret!
-  SECRET_KEY = 'django-insecure-+sn%dpa!086+g+%44z9*^j^q-u4n!j(#wl)x9a%_1op@zz2+1-'
+    # SECURITY WARNING: keep the secret key used in production secret!
+    SECRET_KEY = 'django-insecure-+sn%dpa!086+g+%44z9*^j^q-u4n!j(#wl)x9a%_1op@zz2+1-'
 
-  # SECURITY WARNING: don't run with debug turned on in production!
-  DEBUG = True
+    # SECURITY WARNING: don't run with debug turned on in production!
+    DEBUG = True
 
-  ALLOWED_HOSTS = values.ListValue(["localhost", "0.0.0.0", ".codio.io"])
-  # ALLOWED_HOSTS = ['*']
-  X_FRAME_OPTIONS = 'ALLOW-FROM ' + os.environ.get('CODIO_HOSTNAME') + '-8000.codio.io'
-  CSRF_COOKIE_SAMESITE = None
-  CSRF_TRUSTED_ORIGINS = [os.environ.get('CODIO_HOSTNAME') + '-8000.codio.io']
-  CSRF_COOKIE_SECURE = True
-  SESSION_COOKIE_SECURE = True
-  CSRF_COOKIE_SAMESITE = 'None'
-  SESSION_COOKIE_SAMESITE = 'None'
+    
 
-  # Application definition
+    ALLOWED_HOSTS = values.ListValue(["localhost", "0.0.0.0", ".codio.io"])
+    # ALLOWED_HOSTS = ['*']
+    X_FRAME_OPTIONS = 'ALLOW-FROM ' + os.environ.get('CODIO_HOSTNAME') + '-8000.codio.io'
+    CSRF_COOKIE_SAMESITE = None
+    CSRF_TRUSTED_ORIGINS = [os.environ.get('CODIO_HOSTNAME') + '-8000.codio.io']
+    CSRF_COOKIE_SECURE = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SAMESITE = 'None'
+    SESSION_COOKIE_SAMESITE = 'None'
 
-  INSTALLED_APPS = [
-      'django.contrib.admin',
-      'django.contrib.auth',
-      'django.contrib.contenttypes',
-      'django.contrib.sessions',
-      'django.contrib.messages',
-      'django.contrib.staticfiles',
-      'blog',
-      'crispy_forms',
-      'crispy_bootstrap5',
-  ]
+    # Application definition
 
-  MIDDLEWARE = [
-      'django.middleware.security.SecurityMiddleware',
-      'django.contrib.sessions.middleware.SessionMiddleware',
-      'django.middleware.common.CommonMiddleware',
-  #    'django.middleware.csrf.CsrfViewMiddleware',
-      'django.contrib.auth.middleware.AuthenticationMiddleware',
-      'django.contrib.messages.middleware.MessageMiddleware',
-  #    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-  ]
+    INSTALLED_APPS = [
+        'django.contrib.admin',
+        'django.contrib.auth',
+        'django.contrib.contenttypes',
+        'django.contrib.sessions',
+        'django.contrib.messages',
+        'django.contrib.staticfiles',
+        'blog',
+        'crispy_forms',
+        'crispy_bootstrap5',
+    ]
 
-  ROOT_URLCONF = 'blango.urls'
+    MIDDLEWARE = [
+        'django.middleware.security.SecurityMiddleware',
+        'django.contrib.sessions.middleware.SessionMiddleware',
+        'django.middleware.common.CommonMiddleware',
+    #    'django.middleware.csrf.CsrfViewMiddleware',
+        'django.contrib.auth.middleware.AuthenticationMiddleware',
+        'django.contrib.messages.middleware.MessageMiddleware',
+    #    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    ]
 
-  TEMPLATES = [
-      {
-          'BACKEND': 'django.template.backends.django.DjangoTemplates',
-          'DIRS': [BASE_DIR / 'templates'],
-          'APP_DIRS': True,
-          'OPTIONS': {
-              'context_processors': [
-                  'django.template.context_processors.debug',
-                  'django.template.context_processors.request',
-                  'django.contrib.auth.context_processors.auth',
-                  'django.contrib.messages.context_processors.messages',
-              ],
-          },
-      },
-  ]
+    ROOT_URLCONF = 'blango.urls'
 
-  WSGI_APPLICATION = 'blango.wsgi.application'
+    TEMPLATES = [
+        {
+            'BACKEND': 'django.template.backends.django.DjangoTemplates',
+            'DIRS': [BASE_DIR / 'templates'],
+            'APP_DIRS': True,
+            'OPTIONS': {
+                'context_processors': [
+                    'django.template.context_processors.debug',
+                    'django.template.context_processors.request',
+                    'django.contrib.auth.context_processors.auth',
+                    'django.contrib.messages.context_processors.messages',
+                ],
+            },
+        },
+    ]
 
-
-  # Database
-  # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-
-#   DATABASES = {
-#       'default': {
-#           'ENGINE': 'django.db.backends.sqlite3',
-#           'NAME': BASE_DIR / 'db.sqlite3',
-#       }
-#   }
-
-  DATABASES = {
-    "default": dj_database_url.config(default=f"sqlite:///{BASE_DIR}/db.sqlite3"),
-    "alternative": dj_database_url.config(
-        "ALTERNATIVE_DATABASE_URL",
-        default=f"sqlite:///{BASE_DIR}/alternative_db.sqlite3",
-    ),
-  }
+    WSGI_APPLICATION = 'blango.wsgi.application'
 
 
-  # Password validation
-  # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
+    # Database
+    # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-  AUTH_PASSWORD_VALIDATORS = [
-      {
-          'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-      },
-      {
-          'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-      },
-      {
-          'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-      },
-      {
-          'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-      },
-  ]
+    #   DATABASES = {
+    #       'default': {
+    #           'ENGINE': 'django.db.backends.sqlite3',
+    #           'NAME': BASE_DIR / 'db.sqlite3',
+    #       }
+    #   }
 
-
-  # Internationalization
-  # https://docs.djangoproject.com/en/3.2/topics/i18n/
-
-  LANGUAGE_CODE = 'en-us'
+    DATABASES = {
+        "default": dj_database_url.config(default=f"sqlite:///{BASE_DIR}/db.sqlite3"),
+        "alternative": dj_database_url.config(
+            "ALTERNATIVE_DATABASE_URL",
+            default=f"sqlite:///{BASE_DIR}/alternative_db.sqlite3",
+        ),
+    }
 
 
-#   TIME_ZONE = 'UTC'
-  TIME_ZONE = values.Value("UTC")
+    # Password validation
+    # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
 
-  USE_I18N = True
+    AUTH_PASSWORD_VALIDATORS = [
+        {
+            'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        },
+        {
+            'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        },
+        {
+            'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        },
+        {
+            'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        },
+    ]
 
-  USE_L10N = True
 
-  USE_TZ = True
+    # Internationalization
+    # https://docs.djangoproject.com/en/3.2/topics/i18n/
+
+    LANGUAGE_CODE = 'en-us'
 
 
-  # Static files (CSS, JavaScript, Images)
-  # https://docs.djangoproject.com/en/3.2/howto/static-files/
+    #   TIME_ZONE = 'UTC'
+    TIME_ZONE = values.Value("Asia/Riyadh")
 
-  STATIC_URL = '/static/'
+    USE_I18N = True
 
-  # Default primary key field type
-  # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
+    USE_L10N = True
 
-  DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+    USE_TZ = True
 
-  CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
-  CRISPY_TEMPLATE_PACK = "bootstrap5"
+
+    # Static files (CSS, JavaScript, Images)
+    # https://docs.djangoproject.com/en/3.2/howto/static-files/
+
+    STATIC_URL = '/static/'
+
+    # Default primary key field type
+    # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
+
+    DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+    CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+    CRISPY_TEMPLATE_PACK = "bootstrap5"
+
+    LOGGING = {
+    "version":1,
+    "disable_existing_loggers": False,
+    #   "handlers": {
+    #       "console": {"class":"logging.StreamHandler","stream":"ext://sys.stdout"},
+    #   },
+    #   "handlers": {
+    #       "file": {"class": "logging.FileHandler", "filename": "/var/log/blango.log"},
+    #   },
+
+    "formatters": {
+        "verbose": {
+            "format": "{levelname} {asctime} {module} {process:d} {thread:d} {message}",
+            "style": "{",
+        },
+    },
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+            "stream": "ext://sys.stdout",
+            "formatter": "verbose",
+        },
+    },
+    "root":{
+        "handlers":["console"],
+        "level":"DEBUG",
+    }
+    }
+
+    #If production
+    DJANGO_ADMINS="Jed Llenado,jedlovescpe2@gmail.com; Jed Gmail,jedlovescpe3@gmail.com"
+    LOGGING = {
+        "version": 1,
+        "disable_existing_loggers": False,
+        "filters": {
+            "require_debug_false": {
+                "()": "django.utils.log.RequireDebugFalse",
+            },
+        },
+        "formatters": {
+            "verbose": {
+                "format": "{levelname} {asctime} {module} {process:d} {thread:d} {message}",
+                "style": "{",
+            },
+        },
+        "handlers": {
+            "console": {
+                "class": "logging.StreamHandler",
+                "stream": "ext://sys.stdout",
+                "formatter": "verbose",
+            },
+            "mail_admins": {
+                "level": "ERROR",
+                "class": "django.utils.log.AdminEmailHandler",
+                "filters": ["require_debug_false"],
+            },
+        },
+        "loggers": {
+            "django.request": {
+                "handlers": ["mail_admins"],
+                "level": "ERROR",
+                "propagate": True,
+            },
+        },
+        "root": {
+            "handlers": ["console"],
+            "level": "DEBUG",
+        },
+    }
