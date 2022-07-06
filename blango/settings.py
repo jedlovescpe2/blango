@@ -19,25 +19,17 @@ from configurations import values
 import dj_database_url
 import hashlib
 
-
-
-
 class Dev(Configuration):
-
     # Build paths inside the project like this: BASE_DIR / 'subdir'.
     BASE_DIR = Path(__file__).resolve().parent.parent
-
-
     # Quick-start development settings - unsuitable for production
     # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
-
     # SECURITY WARNING: keep the secret key used in production secret!
-    SECRET_KEY = 'django-insecure-+sn%dpa!086+g+%44z9*^j^q-u4n!j(#wl)x9a%_1op@zz2+1-'
-
-    # SECURITY WARNING: don't run with debug turned on in production!
-    DEBUG = True
-
     
+    SECRET_KEY = 'django-insecure-+sn%dpa!086+g+%44z9*^j^q-u4n!j(#wl)x9a%_1op@zz2+1-'
+    # SECURITY WARNING: don't run with debug turned on in production!
+
+    DEBUG = True
 
     ALLOWED_HOSTS = values.ListValue(["localhost", "0.0.0.0", ".codio.io"])
     # ALLOWED_HOSTS = ['*']
@@ -63,7 +55,18 @@ class Dev(Configuration):
         'blog','blango_auth',
         'crispy_forms',
         'crispy_bootstrap5',
+        "django.contrib.sites",
+        "allauth", 
+        "allauth.account", 
+        "allauth.socialaccount", 
+        "allauth.socialaccount.providers.google",
     ]
+
+    SITE_ID = 1
+    ACCOUNT_USER_MODEL_USERNAME_FIELD = None
+    ACCOUNT_EMAIL_REQUIRED = True
+    ACCOUNT_USERNAME_REQUIRED = False
+    ACCOUNT_AUTHENTICATION_METHOD = "email"
 
     MIDDLEWARE = [
         'django.middleware.security.SecurityMiddleware',
